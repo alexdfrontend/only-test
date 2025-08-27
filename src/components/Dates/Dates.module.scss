@@ -1,0 +1,82 @@
+@use "src/styles/variables" as vars;
+
+.wrapper {
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    max-width: vars.$content-width-desktop;
+    margin: auto;
+    border-left: 1px solid vars.$color-outline-a10;
+    border-right: 1px solid vars.$color-outline-a10;
+    height: 1080px;
+}
+
+.horizontalDivider {
+    position: absolute;
+    top: 480px;
+    width: 100%;
+    border-top: 1px solid vars.$color-outline-a10;
+}
+
+.verticalDivider {
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: vars.$color-outline-a10;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.heading {
+    position: absolute;
+    top: 170px;
+    left: 78px;
+    max-width: 353px;
+    text-align: start;
+}
+
+.headingDecoration {
+    position: absolute;
+    top: 177px;
+    height: 120px;
+    width: 5px;
+    background-image: linear-gradient(to bottom, vars.$color-primary, vars.$color-secondary);
+}
+
+.years {
+    position: absolute;
+    top: 400px;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    font-size: 200px;
+    font-weight: bold;
+    line-height: 160px;
+    letter-spacing: -2%;
+    user-select: none;
+
+    .startYear {
+        color: vars.$color-primary;
+    }
+
+    .endYear {
+        color: vars.$color-secondary;
+    }
+}
+
+.circle {
+    position: absolute;
+    top: 215px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 530px;
+    height: 530px;
+
+    border: 1px solid vars.$color-outline-a20;
+    border-radius: 50%;
+}
