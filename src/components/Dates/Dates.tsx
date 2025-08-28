@@ -3,7 +3,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import styles from "./Dates.module.scss";
 import { TimePoint } from "./types";
-import { timePoints } from "./data";
+import { timePoints_6 } from "./data";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation"; // if you need navigation buttons
+import "swiper/css/pagination"; // if you need pagination dots
+import type { Swiper as SwiperCore } from "swiper";
 
 console.log("styles:", styles); // Дебаг стилей
 console.log("timePoints:", timePoints); // Дебаг данных
@@ -128,6 +135,25 @@ const Dates: React.FC = () => {
                         </div>
                     ))}
                 </div>
+            </div>
+
+            <div className={styles.sliderContainer}>
+                <Swiper
+                    // Pass modules as a prop
+                    modules={[Navigation, Pagination]}
+                    spaceBetween={50}
+                    slidesPerView={3}
+                    navigation
+                    pagination={{ clickable: true }}
+                    onSwiper={(swiper: SwiperCore) => console.log(swiper)}
+                >
+                    {timePoints[activeIndex].events.map((event) => (
+                        <SwiperSlide>
+                            <h3>{event.year}</h3>
+                            <p>{event.text}</p>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
             </div>
         </section>
     );

@@ -1,7 +1,7 @@
 // src/components/TimelineBlock/data.ts
 import { TimePoint } from './types';
 
-export const timePoints: TimePoint[] = [
+export const timePoints_6: TimePoint[] = [
   {
     id: '1',
     startYear: 2015,
