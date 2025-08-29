@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import styles from "./Dates.module.scss";
 import { TimePoint } from "./types";
-import { timePoints_6 } from "./data";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -12,14 +11,15 @@ import "swiper/css/navigation"; // if you need navigation buttons
 import "swiper/css/pagination"; // if you need pagination dots
 import type { Swiper as SwiperCore } from "swiper";
 
-console.log("styles:", styles); // Дебаг стилей
-console.log("timePoints:", timePoints); // Дебаг данных
+interface Props {
+    timePoints: TimePoint[];
+}
 
-const TARGET_ANGLE = -60;
-const POINT_ANGLE_STEP = 360 / timePoints.length; // 60° для 6 точек
-const CIRCLE_DIAMETER = 530;
+const Dates: React.FC<Props> = ({ timePoints }) => {
+    const TARGET_ANGLE = -60;
+    const POINT_ANGLE_STEP = 360 / timePoints.length; // 60° для 6 точек
+    const CIRCLE_DIAMETER = 530;
 
-const Dates: React.FC = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const circleRef = useRef<HTMLDivElement>(null);
     const pointRefs = useRef<HTMLDivElement[]>([]);

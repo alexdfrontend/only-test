@@ -1,5 +1,5 @@
 // src/components/TimelineBlock/data.ts
-import { TimePoint } from './types';
+import { TimePoint } from './components/Dates/types';
 
 export const timePoints_6: TimePoint[] = [
   {
@@ -85,4 +85,38 @@ export const timePoints_6: TimePoint[] = [
       },
     ],
   },
+];
+
+export const timePoints_2: TimePoint[] = [
+  {
+    id: '1',
+    startYear: 2015,
+    endYear: 2022,
+    subject: 'Наука',
+    events: [
+      {
+        id: '1-1',
+        year: 2015,
+        text: '13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды',
+      },
+      {
+        id: '1-2',
+        year: 2016,
+        text: 'Телескоп «Хаббл» обнаружил самую удалённую из всех обнаруженных галактик, получившую обозначение GN-z11',
+      },
+    ],
+  },
+  {
+    id: '2',
+    startYear: 2023,
+    endYear: 2025,
+    subject: 'Технологии',
+    events: [
+      {
+        id: '2-1',
+        year: 2023,
+        text: 'Запуск новой версии React 19',
+      },
+    ],
+  }
 ];
