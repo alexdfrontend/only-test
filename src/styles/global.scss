@@ -1,5 +1,6 @@
 @use "reset";
 @use "variables" as vars;
+@use 'SwiperStyles';
 
 body {
     background-color: vars.$color-bg;

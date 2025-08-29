@@ -145,7 +145,8 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                         <ArrowButton
                             direction="prev"
                             onClick={() => {
-                                const newIndex = (activeIndex - 1) % timePoints.length;
+                                const newIndex =
+                                    (activeIndex - 1) % timePoints.length;
                                 setActiveIndex(newIndex);
                                 rotateCircle(newIndex);
                             }}
@@ -154,7 +155,8 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                         <ArrowButton
                             direction="next"
                             onClick={() => {
-                                const newIndex = (activeIndex + 1) % timePoints.length;;
+                                const newIndex =
+                                    (activeIndex + 1) % timePoints.length;
                                 setActiveIndex(newIndex);
                                 rotateCircle(newIndex);
                             }}
@@ -165,21 +167,37 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
 
                 <div className={styles.sliderContainer}>
                     <Swiper
-                        // Pass modules as a prop
                         modules={[Navigation, Pagination]}
-                        spaceBetween={50}
+                        spaceBetween={80}
+                        slidesOffsetBefore={80}
+                        slidesOffsetAfter={80}
                         slidesPerView={3}
-                        navigation
+                        navigation={{
+                            nextEl: ".swiper-button-next-custom",
+                            prevEl: ".swiper-button-prev-custom",
+                        }}
                         pagination={{ clickable: true }}
                         onSwiper={(swiper: SwiperCore) => console.log(swiper)}
                     >
                         {timePoints[activeIndex].events.map((event) => (
                             <SwiperSlide>
-                                <h3>{event.year}</h3>
-                                <p>{event.text}</p>
+                                <div className={styles.slideContent}>
+                                    <h3>{event.year}</h3>
+                                    <p>{event.text}</p>
+                                </div>
                             </SwiperSlide>
                         ))}
                     </Swiper>
+                    <button className="swiper-button-prev-custom">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15.41,16.59L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.59Z" />
+                        </svg>
+                    </button>
+                    <button className="swiper-button-next-custom">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.59Z" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </section>

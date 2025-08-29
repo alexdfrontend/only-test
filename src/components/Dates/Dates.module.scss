@@ -158,6 +158,22 @@
     left: 0;
     right: 0;
     margin: auto;
+
+    .slideContent {
+        h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 25px;
+            line-height: 120%;
+            font-weight: normal;
+            color: vars.$color-accent;
+            text-align: start;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 20px;
+            text-align: start;
+        }
+    }
 }
 
 .circleControls {
