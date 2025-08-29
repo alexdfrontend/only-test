@@ -7,7 +7,6 @@ function App() {
   return (
     <div className="App">
       <Dates timePoints={timePoints_6} />
-      <Dates timePoints={timePoints_2} />
     </div>
   );
 }

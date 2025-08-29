@@ -1,0 +1,29 @@
+@use '/src/styles/variables.scss' as vars;
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid vars.$color-outline-a50;
+  background-color: vars.$color-bg;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: vars.$color-text;
+}

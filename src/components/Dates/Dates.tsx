@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import styles from "./Dates.module.scss";
 import { TimePoint } from "./types";
+import ArrowButton from "../ui/ArrowButton/ArrowButton";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -135,25 +136,51 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                         </div>
                     ))}
                 </div>
-            </div>
 
-            <div className={styles.sliderContainer}>
-                <Swiper
-                    // Pass modules as a prop
-                    modules={[Navigation, Pagination]}
-                    spaceBetween={50}
-                    slidesPerView={3}
-                    navigation
-                    pagination={{ clickable: true }}
-                    onSwiper={(swiper: SwiperCore) => console.log(swiper)}
-                >
-                    {timePoints[activeIndex].events.map((event) => (
-                        <SwiperSlide>
-                            <h3>{event.year}</h3>
-                            <p>{event.text}</p>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                <div className={styles.circleControls}>
+                    <div className={styles.activePointIndicator}>
+                        0{activeIndex + 1}/0{timePoints.length}
+                    </div>
+                    <div className={styles.buttons}>
+                        <ArrowButton
+                            direction="prev"
+                            onClick={() => {
+                                const newIndex = (activeIndex - 1) % timePoints.length;
+                                setActiveIndex(newIndex);
+                                rotateCircle(newIndex);
+                            }}
+                            disabled={activeIndex === 0}
+                        />
+                        <ArrowButton
+                            direction="next"
+                            onClick={() => {
+                                const newIndex = (activeIndex + 1) % timePoints.length;;
+                                setActiveIndex(newIndex);
+                                rotateCircle(newIndex);
+                            }}
+                            disabled={activeIndex === timePoints.length - 1}
+                        />
+                    </div>
+                </div>
+
+                <div className={styles.sliderContainer}>
+                    <Swiper
+                        // Pass modules as a prop
+                        modules={[Navigation, Pagination]}
+                        spaceBetween={50}
+                        slidesPerView={3}
+                        navigation
+                        pagination={{ clickable: true }}
+                        onSwiper={(swiper: SwiperCore) => console.log(swiper)}
+                    >
+                        {timePoints[activeIndex].events.map((event) => (
+                            <SwiperSlide>
+                                <h3>{event.year}</h3>
+                                <p>{event.text}</p>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
             </div>
         </section>
     );

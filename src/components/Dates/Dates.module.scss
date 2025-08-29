@@ -159,3 +159,25 @@
     right: 0;
     margin: auto;
 }
+
+.circleControls {
+    position: absolute;
+    top: 697px;
+    left: 80px;
+    width: 120px;
+    height: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .activePointIndicator {
+        text-align: start;
+        font-size: 14px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+    }
+}
