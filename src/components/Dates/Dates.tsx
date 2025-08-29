@@ -51,8 +51,6 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
             targetRotation - rotationRef.current
         );
 
-        console.log(`Rotating to index ${index}, delta: ${delta}`); // Дебаг
-
         gsap.to(circleRef.current, {
             rotation: `+=${delta}`,
             duration: 1,
@@ -137,6 +135,58 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                     ))}
                 </div>
 
+                <div className={styles.sliderContainer}>
+                    <Swiper
+                        modules={[Navigation, Pagination]}
+                        spaceBetween={25}
+                        slidesOffsetBefore={0}
+                        slidesOffsetAfter={0}
+                        slidesPerView={1.5}
+                        navigation={{
+                            nextEl: ".swiper-button-next-custom",
+                            prevEl: ".swiper-button-prev-custom",
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        breakpoints={{
+                            // When screen width is >= 768px
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 60,
+                                slidesOffsetBefore: 60,
+                                slidesOffsetAfter: 60,
+                            },
+                            // When screen width is >= 1024px
+                            1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 80,
+                                slidesOffsetBefore: 60,
+                                slidesOffsetAfter: 60,
+                            },
+                        }}
+                    >
+                        {timePoints[activeIndex].events.map((event) => (
+                            <SwiperSlide>
+                                <div className={styles.slideContent}>
+                                    <h3>{event.year}</h3>
+                                    <p>{event.text}</p>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                    <button className="swiper-button-prev-custom">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15.41,16.59L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.59Z" />
+                        </svg>
+                    </button>
+                    <button className="swiper-button-next-custom">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.59Z" />
+                        </svg>
+                    </button>
+                    <div className={styles.customPagination}></div>
+                </div>
                 <div className={styles.circleControls}>
                     <div className={styles.activePointIndicator}>
                         0{activeIndex + 1}/0{timePoints.length}
@@ -163,41 +213,6 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                             disabled={activeIndex === timePoints.length - 1}
                         />
                     </div>
-                </div>
-
-                <div className={styles.sliderContainer}>
-                    <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={80}
-                        slidesOffsetBefore={80}
-                        slidesOffsetAfter={80}
-                        slidesPerView={3}
-                        navigation={{
-                            nextEl: ".swiper-button-next-custom",
-                            prevEl: ".swiper-button-prev-custom",
-                        }}
-                        pagination={{ clickable: true }}
-                        onSwiper={(swiper: SwiperCore) => console.log(swiper)}
-                    >
-                        {timePoints[activeIndex].events.map((event) => (
-                            <SwiperSlide>
-                                <div className={styles.slideContent}>
-                                    <h3>{event.year}</h3>
-                                    <p>{event.text}</p>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                    <button className="swiper-button-prev-custom">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M15.41,16.59L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.59Z" />
-                        </svg>
-                    </button>
-                    <button className="swiper-button-next-custom">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.59Z" />
-                        </svg>
-                    </button>
                 </div>
             </div>
         </section>
