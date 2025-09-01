@@ -1,6 +1,5 @@
 @use "reset";
 @use "variables" as vars;
-@use 'SwiperStyles';
 
 body {
     background-color: vars.$color-bg;
@@ -21,4 +20,11 @@ h2 {
     letter-spacing: 0%;
     font-size: 56px;
     font-weight: bold;
+}
+
+// Swiper styles
+.swiper-pagination-bullet {
+    background-color: vars.$color-text !important;
+    height: 6px !important;
+    width: 6px !important;
 }

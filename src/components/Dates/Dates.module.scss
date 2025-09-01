@@ -150,26 +150,71 @@
     }
 }
 
-.sliderContainer {
+.sliderWrapper {
     position: absolute;
     top: 841px;
     left: 0;
     right: 0;
     margin: auto;
+    display: grid;
+    grid-template-columns: 120px 1fr 120px;
 
-    .slideContent {
-        h3 {
-            font-family: "Bebas Neue", sans-serif;
-            font-size: 25px;
-            line-height: 120%;
-            font-weight: normal;
-            color: vars.$color-accent;
-            text-align: start;
-            margin-bottom: 15px;
+    .sliderButtonNext,
+    .sliderButtonPrev {
+        z-index: 100;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        background-color: #fff;
+        border: none;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(56, 120, 238, 0.1);
+        align-self: center;
+        justify-self: center;
+
+        &.disabled {
+            opacity: 0;
         }
-        p {
-            font-size: 20px;
-            text-align: start;
+
+        svg {
+            fill: vars.$color-accent;
+            transform: scale(0.85);
+        }
+
+        @media (max-width: vars.$mobile-width) {
+            display: none;
+        }
+        &:hover {
+            background-color: #e0e0e0;
+        }
+    }
+
+    .sliderPagination {
+        display: none;
+
+        .swiper-pagination-bullet {
+            background-color: vars.$color-text;
+            margin: 0 10px;
+        }
+    }
+
+    .sliderContainer {
+        min-width: 0;
+        .slideContent {
+            h3 {
+                font-family: "Bebas Neue", sans-serif;
+                font-size: 25px;
+                line-height: 120%;
+                font-weight: normal;
+                color: vars.$color-accent;
+                text-align: start;
+                margin-bottom: 15px;
+            }
+            p {
+                font-size: 20px;
+                text-align: start;
+            }
         }
     }
 }
@@ -228,8 +273,9 @@
         line-height: auto;
     }
 
-    .sliderContainer {
+    .sliderWrapper {
         position: static;
+        grid-template-columns: 1fr;
 
         &::before {
             content: "";
@@ -238,6 +284,14 @@
             width: 100%;
             margin-top: 57px;
             margin-bottom: 20px;
+        }
+
+        .sliderPagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 32px !important;
         }
     }
 
@@ -251,4 +305,5 @@
             margin-top: 10px;
         }
     }
+
 }

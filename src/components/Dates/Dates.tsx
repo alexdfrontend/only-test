@@ -17,16 +17,19 @@ interface Props {
 
 const Dates: React.FC<Props> = ({ timePoints }) => {
     const TARGET_ANGLE = -60;
-    const POINT_ANGLE_STEP = 360 / timePoints.length; // 60° для 6 точек
+    const POINT_ANGLE_STEP = 360 / timePoints.length;
     const CIRCLE_DIAMETER = 530;
 
     const [activeIndex, setActiveIndex] = useState(0);
+
     const circleRef = useRef<HTMLDivElement>(null);
     const pointRefs = useRef<HTMLDivElement[]>([]);
     const textRefs = useRef<HTMLSpanElement[]>([]);
     const rotationRef = useRef(TARGET_ANGLE);
     const startYearRef = useRef<HTMLSpanElement>(null);
     const endYearRef = useRef<HTMLSpanElement>(null);
+    const swiperRef = useRef<SwiperCore | null>(null); // New ref for Swiper instance
+
     // Объекты для анимации GSAP
     const startYearValue = useRef({ value: timePoints[0].startYear });
     const endYearValue = useRef({ value: timePoints[0].endYear });
@@ -110,6 +113,19 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
         rotateCircle(index);
     };
 
+    // Handlers for Swiper navigation
+    const handlePrev = () => {
+        if (swiperRef.current) {
+            swiperRef.current.slidePrev();
+        }
+    };
+
+    const handleNext = () => {
+        if (swiperRef.current) {
+            swiperRef.current.slideNext();
+        }
+    };
+
     if (!timePoints.length) {
         return <div>Нет доступных точек времени</div>;
     }
@@ -147,76 +163,83 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                             }}
                             onClick={() => handlePointClick(index)}
                             aria-label={`Выбрать ${point.subject} (${point.startYear}–${point.endYear})`}
-                        ><div className={styles.pointInner}>
-
-                            <div
-                                ref={(el) => {
-                                    if (el) textRefs.current[index] = el;
-                                }}
-                                className={styles.pointContent}
-                            >
-                                <div className={styles.pointContentText}>
-                                    {point.id}
-                                </div>
-                                <div className={styles.pointTitle}>
-                                    {point.subject}
+                        >
+                            <div className={styles.pointInner}>
+                                <div
+                                    ref={(el) => {
+                                        if (el) textRefs.current[index] = el;
+                                    }}
+                                    className={styles.pointContent}
+                                >
+                                    <div className={styles.pointContentText}>
+                                        {point.id}
+                                    </div>
+                                    <div className={styles.pointTitle}>
+                                        {point.subject}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
                     ))}
                 </div>
-                <div className={styles.sliderContainer}>
-                    <Swiper
-                        modules={[Navigation, Pagination]}
-                        spaceBetween={25}
-                        slidesOffsetBefore={0}
-                        slidesOffsetAfter={0}
-                        slidesPerView={1.5}
-                        navigation={{
-                            nextEl: ".swiper-button-next-custom",
-                            prevEl: ".swiper-button-prev-custom",
-                        }}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        breakpoints={{
-                            768: {
-                                slidesPerView: 2,
-                                spaceBetween: 60,
-                                slidesOffsetBefore: 60,
-                                slidesOffsetAfter: 60,
-                            },
-                            1024: {
-                                slidesPerView: 3,
-                                spaceBetween: 80,
-                                slidesOffsetBefore: 80,
-                                slidesOffsetAfter: 80,
-                            },
-                        }}
+                <div className={styles.sliderWrapper}>
+                    <button
+                        className={styles.sliderButtonPrev}
+                        onClick={handlePrev}
                     >
-                        {timePoints[activeIndex].events.map((event) => (
-                            <SwiperSlide key={event.id}>
-                                <div className={styles.slideContent}>
-                                    <h3>{event.year}</h3>
-                                    <p>{event.text}</p>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                    <button className="swiper-button-prev-custom">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="M15.41,16.59L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.59Z" />
                         </svg>
                     </button>
-                    <button className="swiper-button-next-custom">
+                    <div className={styles.sliderContainer}>
+                        <Swiper
+                            onSwiper={(swiper: SwiperCore) =>
+                                (swiperRef.current = swiper)
+                            }
+                            modules={[Navigation, Pagination]}
+                            spaceBetween={25}
+                            slidesPerView={1.5}
+                            navigation={{
+                                nextEl: `.${styles.sliderButtonNext}`,
+                                prevEl: `.${styles.sliderButtonPrev}`,
+                            }}
+                            pagination={{
+                                clickable: true,
+                                el: `.${styles.sliderPagination}`,
+                            }}
+                            breakpoints={{
+                                768: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 60,
+                                },
+                                1024: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 80,
+                                },
+                            }}
+                        >
+                            {timePoints[activeIndex].events.map((event) => (
+                                <SwiperSlide key={event.id}>
+                                    <div className={styles.slideContent}>
+                                        <h3>{event.year}</h3>
+                                        <p>{event.text}</p>
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                        <div className={styles.sliderPagination}></div>
+                    </div>
+                    <button
+                        className={styles.sliderButtonNext}
+                        onClick={handleNext}
+                    >
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8.59,16.59L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.59Z" />
                         </svg>
                     </button>
-                    <div className={styles.customPagination}></div>
                 </div>
                 <div className={styles.circleControls}>
+                    
                     <div className={styles.activePointIndicator}>
                         0{activeIndex + 1}/0{timePoints.length}
                     </div>
@@ -245,7 +268,6 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                     </div>
                 </div>
             </div>
-            
         </section>
     );
 };
