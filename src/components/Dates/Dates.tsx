@@ -190,8 +190,8 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                             1024: {
                                 slidesPerView: 3,
                                 spaceBetween: 80,
-                                slidesOffsetBefore: 60,
-                                slidesOffsetAfter: 60,
+                                slidesOffsetBefore: 80,
+                                slidesOffsetAfter: 80,
                             },
                         }}
                     >
