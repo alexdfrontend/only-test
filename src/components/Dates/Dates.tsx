@@ -21,6 +21,7 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
     const CIRCLE_DIAMETER = 530;
 
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isFading, setIsFading] = useState(false);
 
     const circleRef = useRef<HTMLDivElement>(null);
     const pointRefs = useRef<HTMLDivElement[]>([]);
@@ -28,7 +29,7 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
     const rotationRef = useRef(TARGET_ANGLE);
     const startYearRef = useRef<HTMLSpanElement>(null);
     const endYearRef = useRef<HTMLSpanElement>(null);
-    const swiperRef = useRef<SwiperCore | null>(null); // New ref for Swiper instance
+    const swiperRef = useRef<SwiperCore | null>(null);
 
     // Объекты для анимации GSAP
     const startYearValue = useRef({ value: timePoints[0].startYear });
@@ -46,6 +47,14 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
         // Установить начальное вращение круга
         gsap.to(circleRef.current, { rotation: TARGET_ANGLE, duration: 0 });
     }, []);
+
+    // Сбрасываем активный swiper-слайд при изменении timePoint
+    useEffect(() => {
+        if (swiperRef.current) {
+            swiperRef.current.slideTo(0, 0);
+            swiperRef.current.update();
+        }
+    }, [activeIndex]);
 
     const rotateCircle = (index: number) => {
         if (!circleRef.current) return;
@@ -108,9 +117,14 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
         });
     };
 
-    const handlePointClick = (index: number) => {
-        setActiveIndex(index);
+    const handleTimePointChange = (index: number) => {
+        setIsFading(true);
         rotateCircle(index);
+
+        setTimeout(() => {
+            setActiveIndex(index);
+            setIsFading(false);
+        }, 500);
     };
 
     // Handlers for Swiper navigation
@@ -161,7 +175,7 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                                     index * POINT_ANGLE_STEP
                                 }deg) translate(${CIRCLE_DIAMETER / 2}px)`,
                             }}
-                            onClick={() => handlePointClick(index)}
+                            onClick={() => handleTimePointChange(index)}
                             aria-label={`Выбрать ${point.subject} (${point.startYear}–${point.endYear})`}
                         >
                             <div className={styles.pointInner}>
@@ -182,8 +196,18 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                         </div>
                     ))}
                 </div>
-                <div className={styles.pointTitleMobile}>{timePoints[activeIndex].subject}</div>
-                <div className={styles.sliderWrapper}>
+                <div
+                    className={`${styles.pointTitleMobile} ${
+                        isFading ? styles.fading : ""
+                    }`}
+                >
+                    {timePoints[activeIndex].subject}
+                </div>
+                <div
+                    className={`${styles.sliderWrapper} ${
+                        isFading ? styles.fading : ""
+                    }`}
+                >
                     <button
                         className={styles.sliderButtonPrev}
                         onClick={handlePrev}
@@ -250,8 +274,7 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                                 const newIndex =
                                     (activeIndex - 1 + timePoints.length) %
                                     timePoints.length;
-                                setActiveIndex(newIndex);
-                                rotateCircle(newIndex);
+                                handleTimePointChange(newIndex);
                             }}
                             disabled={activeIndex === 0}
                         />
@@ -260,8 +283,7 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                             onClick={() => {
                                 const newIndex =
                                     (activeIndex + 1) % timePoints.length;
-                                setActiveIndex(newIndex);
-                                rotateCircle(newIndex);
+                                handleTimePointChange(newIndex);
                             }}
                             disabled={activeIndex === timePoints.length - 1}
                         />

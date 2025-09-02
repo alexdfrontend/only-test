@@ -156,6 +156,12 @@
 .pointTitleMobile {
     display: none;
     font-weight: bold;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+
+    &.fading {
+        opacity: 0;
+    }
 }
 
 .sliderWrapper {
@@ -166,6 +172,13 @@
     margin: auto;
     display: grid;
     grid-template-columns: 120px 1fr 120px;
+
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+
+    &.fading {
+        opacity: 0;
+    }
 
     .sliderButtonNext,
     .sliderButtonPrev {
@@ -307,8 +320,12 @@
     }
 
     .sliderContainer {
-        :global(.swiper-slide-next) {
+        :global(.swiper-slide) {
+            transition: opacity 0.3s ease-in-out;
             opacity: 0.4;
+        }
+        :global(.swiper-slide-active) {
+            opacity: 1;
         }
     }
 
