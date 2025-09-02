@@ -182,6 +182,7 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                         </div>
                     ))}
                 </div>
+                <div className={styles.pointTitleMobile}>{timePoints[activeIndex].subject}</div>
                 <div className={styles.sliderWrapper}>
                     <button
                         className={styles.sliderButtonPrev}
@@ -239,7 +240,6 @@ const Dates: React.FC<Props> = ({ timePoints }) => {
                     </button>
                 </div>
                 <div className={styles.circleControls}>
-                    
                     <div className={styles.activePointIndicator}>
                         0{activeIndex + 1}/0{timePoints.length}
                     </div>

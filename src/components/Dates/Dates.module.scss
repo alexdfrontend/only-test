@@ -150,6 +150,11 @@
     }
 }
 
+.pointTitleMobile {
+    display: none;
+    font-weight: bold;
+}
+
 .sliderWrapper {
     position: absolute;
     top: 841px;
@@ -173,8 +178,9 @@
         align-self: center;
         justify-self: center;
 
-        &.disabled {
+        &:global(.swiper-button-disabled) {
             opacity: 0;
+            pointer-events: none;
         }
 
         svg {
@@ -267,10 +273,12 @@
     }
 
     .years {
-        margin-top: 56px;
         position: static;
         font-size: 56px;
-        line-height: auto;
+    }
+
+    .pointTitleMobile {
+        display: block;
     }
 
     .sliderWrapper {
@@ -282,7 +290,7 @@
             display: block;
             border-top: 1px solid vars.$color-outline-a20;
             width: 100%;
-            margin-top: 57px;
+            margin-top: 20px;
             margin-bottom: 20px;
         }
 
