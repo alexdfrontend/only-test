@@ -295,6 +295,12 @@
         }
     }
 
+    .sliderContainer {
+        :global(.swiper-slide-next) {
+            opacity: 0.4;
+        }
+    }
+
     .circleControls {
         position: static;
         margin-top: 78px;
@@ -305,5 +311,4 @@
             margin-top: 10px;
         }
     }
-
 }
